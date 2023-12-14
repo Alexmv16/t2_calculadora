@@ -6,7 +6,7 @@ void main() {
 }
 
 class Calculator extends StatelessWidget {
-  static String title = 'Calculator';
+  static String title = 'Calculadora';
 
   const Calculator({Key? key}) : super(key: key);
 
