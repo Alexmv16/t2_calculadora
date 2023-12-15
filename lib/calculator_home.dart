@@ -5,11 +5,12 @@ class CalculatorHome extends StatefulWidget {
   static const double fontSizeMedium = 36.0;
   static const double fontSizeBig = 48.0;
 
-  const CalculatorHome({Key? key}) : super (key: key);
+  const CalculatorHome({Key? key}) : super(key: key);
 
   @override
   State<CalculatorHome> createState() => _CalculatorHomeState();
 }
+
 class _CalculatorHomeState extends State<CalculatorHome> {
   String _equationText = '0';
   String _resultText = '0';
@@ -20,14 +21,17 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     return Container(
       alignment: Alignment.centerRight,
       padding: EdgeInsets.all(10),
-      child: Text(
-        _equationText,
-        style: TextStyle(fontSize: _equationFontSize),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          _equationText,
+          style: TextStyle(fontSize: _equationFontSize),
+        ),
       ),
     );
   }
 
-  Widget _resultPanel(){
+  Widget _resultPanel() {
     return Container(
       alignment: Alignment.centerRight,
       margin: EdgeInsets.all(1.0),
@@ -36,31 +40,37 @@ class _CalculatorHomeState extends State<CalculatorHome> {
         border: Border.all(
           color: Colors.blue.shade200,
           width: 2,
-        )
+        ),
       ),
       padding: EdgeInsets.all(10),
-      child: Text(
-        _resultText,
-        style: TextStyle(
-          fontSize: _resultFontSize,
-          color: Colors.blue.shade700,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          _resultText,
+          style: TextStyle(
+            fontSize: _resultFontSize,
+            color: Colors.blue.shade700,
+          ),
         ),
       ),
     );
   }
 
-  Widget _calcButton(String text, Color color) {
+  Widget _calcButton(String text, Color color, {double fontSize = 28.0}) {
     return Container(
       margin: EdgeInsets.all(1.0),
       padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(color: color,),
+      decoration: BoxDecoration(color: color),
       child: TextButton(
-        child: Text(
-        text,
-        style: TextStyle(color: Colors.white, fontSize: 28.0)
-    ),
-    onPressed: () => _onCalcButtonPressed(text),
-    ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white, fontSize: fontSize),
+          ),
+        ),
+        onPressed: () => _onCalcButtonPressed(text),
+      ),
     );
   }
 
@@ -68,50 +78,51 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     return Container(
       color: Colors.grey.shade300,
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Row(
-        children: <Widget>[
-          Expanded(child: _calcButton('C', Colors.orange),),
-          Expanded(child: _calcButton('DEL', Colors.redAccent),),
-          Expanded(child: _calcButton('%', Colors.lightBlue),),
-          Expanded(child: _calcButton('+', Colors.lightBlue),),
+            children: <Widget>[
+              Expanded(child: _calcButton('C', Colors.orange)),
+              Expanded(child: _calcButton('DEL', Colors.redAccent)),
+              Expanded(child: _calcButton('%', Colors.lightBlue)),
+              Expanded(child: _calcButton('+', Colors.lightBlue)),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: _calcButton('7', Colors.grey.shade400)),
+              Expanded(child: _calcButton('8', Colors.grey.shade400)),
+              Expanded(child: _calcButton('9', Colors.grey.shade400)),
+              Expanded(child: _calcButton('x', Colors.lightBlue)),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: _calcButton('4', Colors.grey.shade400)),
+              Expanded(child: _calcButton('5', Colors.grey.shade400)),
+              Expanded(child: _calcButton('6', Colors.grey.shade400)),
+              Expanded(child: _calcButton('-', Colors.lightBlue)),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: _calcButton('1', Colors.grey.shade400)),
+              Expanded(child: _calcButton('2', Colors.grey.shade400)),
+              Expanded(child: _calcButton('3', Colors.grey.shade400)),
+              Expanded(child: _calcButton('+', Colors.lightBlue)),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: _calcButton('0', Colors.grey.shade400, fontSize: 24.0)),
+              Expanded(child: _calcButton('.', Colors.grey.shade400)),
+              Expanded(child: _calcButton('=', Colors.orange)),
+            ],
+          ),
         ],
       ),
-          Row(
-       children: <Widget>[
-          Expanded(child: _calcButton('7', Colors.grey.shade400),),
-          Expanded(child: _calcButton('8', Colors.grey.shade400),),
-          Expanded(child: _calcButton('9', Colors.grey.shade400),),
-          Expanded(child: _calcButton('x', Colors.lightBlue),),
-  ],
-    ),
-           Row(
-        children: <Widget>[
-          Expanded(child: _calcButton('4', Colors.grey.shade400),),
-          Expanded(child: _calcButton('5', Colors.grey.shade400),),
-          Expanded(child: _calcButton('6', Colors.grey.shade400),),
-          Expanded(child: _calcButton('-', Colors.lightBlue),),
-    ],
-    ),
-           Row(
-        children: <Widget>[
-          Expanded(child: _calcButton('1', Colors.grey.shade400),),
-          Expanded(child: _calcButton('2', Colors.grey.shade400),),
-          Expanded(child: _calcButton('3', Colors.grey.shade400),),
-          Expanded(child: _calcButton('+', Colors.lightBlue),),
-    ],
-    ),
-           Row(
-        children: <Widget>[
-          Expanded(child: _calcButton('0', Colors.grey.shade400),),
-          Expanded(child: _calcButton('.', Colors.grey.shade400),),
-          Expanded(child: _calcButton('=', Colors.orange),),
-    ],
-    ),
-  ],
-  ),
-  );
+    );
   }
 
   String _evaluateEquation() {
@@ -127,17 +138,17 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     } catch (e) {
       operationResult = 'Error in expression';
     }
-     return operationResult;
+    return operationResult;
   }
 
   void _onCalcButtonPressed(String text) {
     setState(() {
       if (text == 'C') {
-      _equationText = '0';
-      _resultText = '0';
-      _equationFontSize = CalculatorHome.fontSizeMedium;
-      _resultFontSize = CalculatorHome.fontSizeBig;
-    } else if (text == 'DEL') {
+        _equationText = '0';
+        _resultText = '0';
+        _equationFontSize = CalculatorHome.fontSizeMedium;
+        _resultFontSize = CalculatorHome.fontSizeBig;
+      } else if (text == 'DEL') {
         _equationText = _equationText.substring(0, _equationText.length - 1);
         if (_equationText.isEmpty) {
           _equationText = '0';
@@ -157,20 +168,23 @@ class _CalculatorHomeState extends State<CalculatorHome> {
       }
     });
   }
-
+//TODO ACTIVIDAD 2  He utilizado "SingleChildScrollView" para permitir el desplazamiento vertical de los widgets cuando se sobrepasa el espacio disponible
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Calculadora')),
       body: SafeArea(
-        child:Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _equationPanel(),
-          _resultPanel(),
-          _buttonsPanel(),
-        ],
-      ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _equationPanel(),
+              _resultPanel(),
+              _buttonsPanel(),
+            ],
+          ),
+        ),
       ),
     );
   }
