@@ -17,15 +17,16 @@ class _CalculatorHomeState extends State<CalculatorHome> {
   double _equationFontSize = CalculatorHome.fontSizeMedium;
   double _resultFontSize = CalculatorHome.fontSizeBig;
 
+  // TODO ACTIVIDAD 1 He utilizado el fittedbox para ajustar automáticamente el tamaño del texto según el espacio disponible
   Widget _equationPanel() {
     return Container(
-      alignment: Alignment.centerRight,
-      padding: EdgeInsets.all(10),
+      alignment: Alignment.bottomRight,
+      padding: EdgeInsets.all(16),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
           _equationText,
-          style: TextStyle(fontSize: _equationFontSize),
+          style: TextStyle(fontSize: _equationFontSize, color: Colors.black),
         ),
       ),
     );
@@ -33,16 +34,14 @@ class _CalculatorHomeState extends State<CalculatorHome> {
 
   Widget _resultPanel() {
     return Container(
-      alignment: Alignment.centerRight,
-      margin: EdgeInsets.all(1.0),
+      alignment: Alignment.bottomRight,
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
-        border: Border.all(
-          color: Colors.blue.shade200,
-          width: 2,
-        ),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.blue.shade200, width: 2),
       ),
-      padding: EdgeInsets.all(10),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
@@ -58,9 +57,19 @@ class _CalculatorHomeState extends State<CalculatorHome> {
 
   Widget _calcButton(String text, Color color, {double fontSize = 28.0}) {
     return Container(
-      margin: EdgeInsets.all(1.0),
-      padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(color: color),
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: TextButton(
         child: FittedBox(
           fit: BoxFit.scaleDown,
@@ -77,47 +86,53 @@ class _CalculatorHomeState extends State<CalculatorHome> {
   Widget _buttonsPanel() {
     return Container(
       color: Colors.grey.shade300,
+      padding: EdgeInsets.all(8), // Ajuste del espaciado
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(child: _calcButton('C', Colors.orange)),
-              Expanded(child: _calcButton('DEL', Colors.redAccent)),
-              Expanded(child: _calcButton('%', Colors.lightBlue)),
-              Expanded(child: _calcButton('+', Colors.lightBlue)),
+              _calcButton('C', Colors.orange),
+              _calcButton('DEL', Colors.redAccent),
+              _calcButton('%', Colors.lightBlue),
+              _calcButton('+', Colors.lightBlue),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(child: _calcButton('7', Colors.grey.shade400)),
-              Expanded(child: _calcButton('8', Colors.grey.shade400)),
-              Expanded(child: _calcButton('9', Colors.grey.shade400)),
-              Expanded(child: _calcButton('x', Colors.lightBlue)),
+              _calcButton('7', Colors.grey.shade400),
+              _calcButton('8', Colors.grey.shade400),
+              _calcButton('9', Colors.grey.shade400),
+              _calcButton('x', Colors.lightBlue),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(child: _calcButton('4', Colors.grey.shade400)),
-              Expanded(child: _calcButton('5', Colors.grey.shade400)),
-              Expanded(child: _calcButton('6', Colors.grey.shade400)),
-              Expanded(child: _calcButton('-', Colors.lightBlue)),
+              _calcButton('4', Colors.grey.shade400),
+              _calcButton('5', Colors.grey.shade400),
+              _calcButton('6', Colors.grey.shade400),
+              _calcButton('-', Colors.lightBlue),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(child: _calcButton('1', Colors.grey.shade400)),
-              Expanded(child: _calcButton('2', Colors.grey.shade400)),
-              Expanded(child: _calcButton('3', Colors.grey.shade400)),
-              Expanded(child: _calcButton('+', Colors.lightBlue)),
+              _calcButton('1', Colors.grey.shade400),
+              _calcButton('2', Colors.grey.shade400),
+              _calcButton('3', Colors.grey.shade400),
+              _calcButton('+', Colors.lightBlue),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(child: _calcButton('0', Colors.grey.shade400, fontSize: 24.0)),
-              Expanded(child: _calcButton('.', Colors.grey.shade400)),
-              Expanded(child: _calcButton('=', Colors.orange)),
+              _calcButton('0', Colors.grey.shade400, fontSize: 24.0),
+              _calcButton('.', Colors.grey.shade400),
+              _calcButton('=', Colors.orange),
             ],
           ),
         ],
@@ -189,3 +204,5 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     );
   }
 }
+
+
